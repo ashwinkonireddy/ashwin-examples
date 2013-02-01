@@ -1,0 +1,29 @@
+<?php
+ 
+function verified(){
+    $redirect_url='http://ak.stickyeyes.com/tryout/ashwin/samples/age-verification/verify.php';
+    $expires=-1;
+    session_start();
+    $validated=false;
+    if(!empty($_COOKIE["verified"])) { $validated=true; }
+    if(!$validated && isset($_SESSION['verified'])) { $validated=true; }
+    if(is_numeric($expires) && $expires==-1 && !isset($_SESSION['verified'])) { $validated=false; }
+    if($validated) { return; }
+    else {
+    $redirect_url=$redirect_url."?return=".$_SERVER['REQUEST_URI']."&x=".$expires;
+    Header('Location: '.$redirect_url);
+    exit(0);
+    }
+}
+verified();
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+Hello
+</body>
+</html>
